@@ -7,9 +7,9 @@ const { Server } = require("socket.io");
 const authRoutes = require("./routes/auth");
 require("dotenv").config();
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected "))
+  .catch((err) => console.log("MongoDB Error :", err));
 
 const app = express();
 app.use(cors());
