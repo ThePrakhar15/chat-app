@@ -5,23 +5,19 @@ const User = require("../models/User");
 const router = express.Router();
 
 
-// 🔐 REGISTER
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // validation
     if (!username || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    // check existing user
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -40,12 +36,10 @@ router.post("/register", async (req, res) => {
 });
 
 
-// 🔐 LOGIN
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // validation
     if (!username || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
@@ -69,6 +63,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 module.exports = router;
